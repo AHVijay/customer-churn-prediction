@@ -45,6 +45,77 @@ source venv/bin/activate
 pip install -r requirements.txt
 ```
 
+## 🚀 Quick Start (Step-by-Step)
+
+Follow these steps to get the project running:
+
+### Step 1: Clone and Setup
+```bash
+# Clone the repository
+git clone https://github.com/YOUR_USERNAME/YOUR_REPO_NAME.git
+cd customer-churn-prediction
+
+# Create virtual environment
+python -m venv venv
+
+# Activate virtual environment
+# Windows:
+venv\Scripts\activate
+# macOS/Linux:
+source venv/bin/activate
+```
+
+### Step 2: Install Dependencies
+```bash
+pip install -r requirements.txt
+```
+
+### Step 3: Download Dataset
+The dataset is not included in the repository. Download it from Kaggle:
+1. Go to [Telco Customer Churn Dataset](https://www.kaggle.com/blastchar/telco-customer-churn)
+2. Download `WA_Fn-UseC_-Telco-Customer-Churn.csv`
+3. Place the file in the `data/` directory as `telco-churn.csv`
+
+### Step 4: Train the Model
+```bash
+python src/train.py
+```
+This will:
+- Load and preprocess the data
+- Train multiple ML models (Logistic Regression, Random Forest, XGBoost)
+- Save the best model and preprocessor
+- Generate evaluation reports and visualizations
+
+### Step 5: Run the Web Dashboard
+```bash
+streamlit run app.py
+```
+- Open your browser to `http://localhost:8501`
+- Enter customer details in the sidebar
+- Click "Predict Churn" to get real-time predictions
+
+### Step 6: Make API Predictions (Optional)
+```python
+from src.predict import ChurnPredictor
+
+# Initialize predictor
+predictor = ChurnPredictor()
+
+# Make prediction
+customer_data = {
+    'tenure': 12,
+    'MonthlyCharges': 65.0,
+    'TotalCharges': 780.0,
+    'Contract': 'Month-to-month',
+    'InternetService': 'Fiber optic',
+    'OnlineSecurity': 'No',
+    'TechSupport': 'No'
+}
+
+result = predictor.predict_single(customer_data)
+print(f"Churn Probability: {result['churn_probability']:.1%}")
+```
+
 ## 🎯 Usage
 
 ### Training the Model
@@ -75,6 +146,55 @@ result = predictor.predict_single({
 
 print(f"Churn Probability: {result['churn_probability']:.1%}")
 ```
+
+## 🔧 Troubleshooting
+
+### Common Issues:
+
+**1. Module Import Errors**
+```bash
+# If you get import errors, ensure you're in the correct directory
+cd customer-churn-prediction
+
+# And virtual environment is activated
+venv\Scripts\activate  # Windows
+source venv/bin/activate  # macOS/Linux
+```
+
+**2. Dataset Not Found**
+- Ensure `data/telco-churn.csv` exists
+- Download from Kaggle if missing
+- Check file permissions
+
+**3. Model Files Missing**
+- Run `python src/train.py` to generate models
+- Check `models/` directory for `.pkl` files
+
+**4. Port Already in Use**
+```bash
+# Kill process using port 8501
+# Windows:
+netstat -ano | findstr :8501
+taskkill /PID <PID> /F
+
+# Or run on different port:
+streamlit run app.py --server.port 8502
+```
+
+**5. Memory Issues**
+- XGBoost training might require more RAM
+- Reduce data size or use simpler models if needed
+
+**6. Permission Errors**
+```bash
+# On Windows, run terminal as Administrator
+# Or check write permissions for models/ and reports/ directories
+```
+
+### Getting Help:
+- Check the terminal output for specific error messages
+- Ensure all dependencies are installed: `pip list`
+- Verify Python version: `python --version`
 
 ## 📁 Project Structure
 
