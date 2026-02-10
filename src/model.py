@@ -1,3 +1,4 @@
+import os
 import pandas as pd
 import numpy as np
 from sklearn.ensemble import RandomForestClassifier
@@ -86,6 +87,7 @@ class ChurnModel:
         plt.ylabel('True Label')
         plt.xlabel('Predicted Label')
         plt.tight_layout()
+        os.makedirs('reports', exist_ok=True)
         plt.savefig('reports/confusion_matrix.png', dpi=300, bbox_inches='tight')
         plt.show()
         
@@ -106,6 +108,7 @@ class ChurnModel:
         plt.legend()
         plt.grid(alpha=0.3)
         plt.tight_layout()
+        os.makedirs('reports', exist_ok=True)
         plt.savefig('reports/roc_curve.png', dpi=300, bbox_inches='tight')
         plt.show()
     
@@ -130,6 +133,7 @@ class ChurnModel:
         plt.title(f'Top 15 Features - {self.best_model_name.upper()} ({method})')
         plt.xlabel(method)
         plt.tight_layout()
+        os.makedirs('reports', exist_ok=True)
         plt.savefig('reports/feature_importance.png', dpi=300, bbox_inches='tight')
         plt.show()
         
@@ -151,6 +155,7 @@ class ChurnModel:
         plt.figure(figsize=(10, 8))
         shap.summary_plot(shap_values, X_sample, show=False)
         plt.tight_layout()
+        os.makedirs('reports', exist_ok=True)
         plt.savefig('reports/shap_summary.png', dpi=300, bbox_inches='tight')
         plt.show()
     
