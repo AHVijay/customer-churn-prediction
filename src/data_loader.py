@@ -6,8 +6,15 @@ from pathlib import Path
 class ChurnDataLoader:
     """Load and Validate Telco Customer CHurn dataset."""
 
-    def __init__(self, data_path = 'data'):
-        self.data_path = data_path
+    def __init__(self, data_path = None):
+        # Use project root's data directory by default
+        if data_path is None:
+            project_root = Path(__file__).parent.parent
+            self.data_path = project_root / 'data'
+        else:
+            self.data_path = Path(data_path)
+
+        self.data_path = str(self.data_path)
 
     def download_dataset(self):
         """Download Teclo Churn dataset from Kaggle or web source."""
